@@ -7,7 +7,7 @@ import camp.nextstep.edu.missionutils.test.NsTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("InputViewTest 클래스 테스트")
+@DisplayName("InputView 클래스 테스트")
 public class InputViewTest extends NsTest {
 
     @DisplayName("driveCount()에서 시도횟수 입력시 parseIntNumString(String numString)로 문자로 입력한 숫자 값을 int타입으로 반환한다.")
