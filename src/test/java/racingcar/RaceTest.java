@@ -1,6 +1,7 @@
 package racingcar;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,7 @@ public class RaceTest {
     @DisplayName("race 생성자 실행하면 경주 최종 승리자를 반환")
     @Test
     void raceConstructorReturnWinners() {
-        Race race = new Race("hong, soong", 2, new FixedMakeNumber(2));
+        Race race = new Race("hong, soong", "2", new FixedMakeNumber(2));
         List<String> winners = race.getWinners();
 
         assertThat(winners).containsExactlyInAnyOrder("hong", "soong");
@@ -21,7 +22,7 @@ public class RaceTest {
     @DisplayName("race 생성자에 자동차 이름을 안넣음 -> IllegalArgumentException")
     @Test
     void NoCarName() {
-        assertThatThrownBy(() -> new Race("  ", 1, new MakeRandomNumber()))
+        assertThatThrownBy(() -> new Race("  ", "1", new MakeRandomNumber()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("자동차 이름이 없습니다.");
     }
@@ -29,7 +30,7 @@ public class RaceTest {
     @DisplayName("race 생성자에 잘못된 자동차이름 형식 작성 -> IllegalArgumentException")
     @Test
     void wrongFormatCarName() {
-        assertThatThrownBy(() -> new Race("hong, ,soong", 1, new MakeRandomNumber()))
+        assertThatThrownBy(() -> new Race("hong, ,soong", "1", new MakeRandomNumber()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("자동차 이름이 유효하지 않습니다.");
     }
@@ -65,5 +66,29 @@ public class RaceTest {
 
         List<String> winners = race.getWinners();
         assertThat(winners).containsExactlyInAnyOrder("hong", "soong");
+    }
+
+    @DisplayName("시도횟수 입력시 Race 생성자에 임의의 문자입력 -> IllegalArgumentException")
+    @Test
+    void tryCountUseWrongString() {
+        assertThatThrownBy(() -> new Race("hong, soong", "a", new MakeRandomNumber()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("시도 횟수에 잘못된 값을 입력하였습니다.");
+    }
+
+    @DisplayName("시도횟수 입력시 Race 생성자에 시도횟수 0 입력 -> IllegalArgumentException")
+    @Test
+    void tryCountUseZero() {
+        assertThatThrownBy(() -> new Race("hong, soong", "0", new MakeRandomNumber()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("시도 횟수는 1보다 작은수는 사용할 수 없습니다.");
+    }
+
+    @DisplayName("시도횟수 입력시 Race 생성자에 음수 입력 -> IllegalArgumentException")
+    @Test
+    void tryCountUseNegativeNumberString() {
+        assertThatThrownBy(() -> new Race("hong, soong", "-1", new MakeRandomNumber()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("시도 횟수는 1보다 작은수는 사용할 수 없습니다.");
     }
 }
