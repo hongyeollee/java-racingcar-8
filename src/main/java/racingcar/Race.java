@@ -10,9 +10,9 @@ public class Race {
     private final MakeNumber makeNumber;
 
 
-    public Race (String rawName, int driveCount, MakeNumber makeNumber) {
+    public Race (String rawName, String driveCount, MakeNumber makeNumber) {
         this.cars = parseNames(rawName);
-        this.driveCount = driveCount;
+        this.driveCount = parseIntDriveCount(driveCount);
         this.makeNumber = makeNumber;
     }
 
@@ -64,6 +64,19 @@ public class Race {
             list.add(new Car(token));
         }
         return list;
+    }
+
+    private static int parseIntDriveCount(String numberString) {
+        try {
+            int number = Integer.parseInt(numberString.trim());
+            if (number <= 0) {
+                throw new IllegalArgumentException("시도 횟수는 1보다 작은수는 사용할 수 없습니다.");
+            }
+
+            return number;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("시도 횟수에 잘못된 값을 입력하였습니다.");
+        }
     }
 
     /**
