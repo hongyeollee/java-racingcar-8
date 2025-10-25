@@ -1,4 +1,4 @@
-package racingcar;
+package racingcar.domain.number;
 
 public class FixedMakeNumber implements MakeNumber {
     private final int number;
