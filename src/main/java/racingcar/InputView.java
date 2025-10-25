@@ -9,22 +9,8 @@ public class InputView {
         return Console.readLine();
     }
 
-    public static int driveCount() {
+    public static String driveCount() {
         System.out.println("시도할 횟수는 몇 회인가요?");
-        String readLine = Console.readLine();
-        return parseIntNumString(readLine);
-    }
-
-    private static int parseIntNumString(String numString) {
-        try {
-            int number = Integer.parseInt(numString.trim());
-            if (number <= 0) {
-                throw new IllegalArgumentException("시도 횟수는 1보다 작은수는 사용할 수 없습니다.");
-            }
-
-            return number;
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("시도 횟수에 잘못된 값을 입력하였습니다.");
-        }
+        return Console.readLine();
     }
 }
